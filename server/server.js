@@ -39,8 +39,12 @@ app.post('/api/user/login',(req,res)=> {
 
         // 2-compare the string with the hash -> move forward
         user.comparePasswords(req.body.password, (err,isMatch)=>{
-            if(err) res.json({message:"password incorrect"});
-            res.status(200).send(isMatch)
+            if(err) throw err;
+            if(!isMatch) return res.status(400).json({message:"bad password"});
+            user.generateToken((err, user)=>{
+                if(err) return res.status(400).send(err);
+                res.cookie('x-auth', user.token).send('ok')
+            })
         })
 
 
