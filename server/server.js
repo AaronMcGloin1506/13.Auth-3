@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 const app = express();
 
-const mongoUri = 'mongodb+srv://@cluster0.omxue.mongodb.net/authApp?retryWrites=true&w=majority';
+const mongoUri = 'mongodb+srv://AdminMcGloin:MongoAaron123@cluster0.omxue.mongodb.net/authApp?retryWrites=true&w=majority';
 mongoose.connect(mongoUri,{
     useNewUrlParser: true,
     useUnifiedTopology: true
