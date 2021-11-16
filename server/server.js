@@ -16,8 +16,10 @@ mongoose.set('useCreateIndex',true)
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+
 ///// Models /////
 const { User } = require('./models/user');
+const { authenticate } = require('./middleware/auth')
 
 ///// Routes /////
 app.post('/api/user',(req,res)=>{
@@ -55,14 +57,18 @@ app.post('/api/user/login',(req,res)=> {
     }) 
 })
 
-app.get('/api/books',(req,res)=>{
-    let token = req.cookies.auth;
-    //methods are dependents of the user object, but the statics dont 
-    User.findByToken(token,(err,user)=>{
-        if(err) throw err
-        if(!user) return res.status(200).send({message:'bad token'});
-        res.status(200).send(user)
-    })
+app.get('/api/books',authenticate,(req,res)=>{
+
+    res.status(200).send(req.email)
+
+
+    // let token = req.cookies.auth;
+    // //methods are dependents of the user object, but the statics dont 
+    // User.findByToken(token,(err,user)=>{
+    //     if(err) throw err
+    //     if(!user) return res.status(200).send({message:'bad token'});
+    //     res.status(200).send(user)
+    // })
 })
 
 
